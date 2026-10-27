@@ -16,15 +16,15 @@
 #let u = 2.5 * X
 #let gut = 3 * X
 #let col = 16 * X
-#let margin = 12 * X
+#let margin = 9 * X
 #let span(k) = k * col + (k - 1) * gut
-#let col-a = span(1)
-#let col-b = span(3)
+#let col-a = 13 * X
+#let col-b = span(3) + 6 * X + 3 * X
 #let col-c = span(2)
-#let lines = 66
+#let lines = 69
 #let text-size = X / 0.519             // ABC Areal's x-height is 0.519 em
 #let small-size = 5 / 6 * text-size
-#let title-size = 2 * u / 0.716        // capitals two lines tall
+#let title-size = 1.5 * u / 0.716
 #let drop = 0.6 * X                    // the baseline sits this far above the bottom of its line
 
 #let ink = rgb("#1a1a1a")
@@ -43,11 +43,11 @@
 #set block(spacing: 0pt)
 #show raw: set text(font: mono, size: 1.25em)
 
-#let tag(body) = text(font: mono, fill: grey, body)          // labels in the left column
+#let tag(body) = text(font: mono, fill: grey, size: small-size, body)   // labels in the left column
 #let small(body) = text(size: small-size, number-width: "tabular", body)
 #let fig(caption, file, height, width: col-c) = small({      // height in lines
   block(width: width, caption)
-  block(image(out + file, width: width, height: height * u))
+  block(image(out + file, width: width, height: height * u, fit: "contain"))
 })
 #let tbl(..cells) = small(table(columns: (1.6fr, 1fr, 1fr), stroke: none, inset: 0pt,
   align: (left, right, right), ..cells))
@@ -56,11 +56,14 @@
 #grid(
   columns: (col-a, col-b, col-c),
   column-gutter: gut,
-  row-gutter: (2 * u, 2 * u, u, u, u, 2 * u, u, u),   // one empty line between rows, two between parts
+  row-gutter: u,                                      // one empty line between rows
 
   // title
   tag[Report 1 \ Group 6],
-  grid.cell(colspan: 2, text(size: title-size, top-edge: 3 * u - drop, bottom-edge: -drop, title)),
+  grid.cell(colspan: 2, text(size: title-size, top-edge: 2 * u - drop, bottom-edge: -drop, title)),
+
+  tag[Research \ question],
+  grid.cell(colspan: 2, rq),
 
   // findings
   tag[Findings],
@@ -68,7 +71,7 @@
   small(text(fill: grey)[European Social Survey Round 11 \ Switzerland, 2023 \ N #n.n_total respondents]),
 
   // 1 variables
-  [1 Variables \ #tag[Dependent \ `fltlnl`]],
+  small[1 Variables \ #tag[Dependent \ `fltlnl`]],
   dependent,
   fig([Figure 1 Self-reported loneliness, past week], "fig1_lonely.svg", 6),
 
@@ -77,12 +80,12 @@
   fig([Figure 2 Self-reported minutes online per day], "fig2_internet.svg", 6),
 
   // 2 grouping
-  [2 Grouping \ #tag[`net_group`]],
+  small[2 Grouping \ #tag[`net_group`]],
   grouping,
   fig([Figure 3 Groups, N #n.group_n, mode #n.group_mode], "fig3_groups.svg", 3),
 
   // 3 descriptives
-  [3 Descriptives],
+  small[3 Descriptives],
   descriptives,
   tbl(
     [Table 1], `fltlnl`, `netustm`, rule,
@@ -97,7 +100,7 @@
   ),
 
   // 4 test
-  [4 Test],
+  small[4 Test],
   test,
   tbl(
     [Group], [N], [SD], rule,
@@ -110,7 +113,7 @@
   grid.cell(colspan: 2, fig([Every respondent, self-reported loneliness (1–4, jittered) by self-reported minutes online, #g1[red above the mean]], "fig5_scatter.svg", 5, width: col-b + gut + col-c)),
 
   // 5 interpretation
-  [5 Interpretation],
+  small[5 Interpretation],
   interpretation,
   fig([Figure 4 Mean self-reported loneliness, 95% CI \ Welch #g1[1] − 0: #n.diff (#n.diff_lo to #n.diff_hi) \ t #n.t, df #n.df, p #n.p], "fig4_means.svg", 5),
 )
