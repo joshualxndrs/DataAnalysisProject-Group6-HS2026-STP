@@ -1,6 +1,8 @@
 .DS_Store
 .Rproj.user/
 .Rproj.user
+.RData
+.Rhistory
 
 # fonts live in Report/fonts only (private group repo); stray copies elsewhere are ignored
 *.ttf

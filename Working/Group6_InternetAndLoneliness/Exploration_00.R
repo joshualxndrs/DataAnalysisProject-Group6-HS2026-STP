@@ -107,12 +107,12 @@ iv_compare
 
 # n_answers and top_share:
 #           n_answers top_share
-# fltlnl      2         0.75
-# sclmeet     2         0.35
-# sclact      8         0.46
-# inprdsc     2         0.36
-# fltsd       3         0.57
-# fltdpr      1         0.69
+# fltlnl      4         0.75
+# sclmeet     7         0.35
+# sclact      5         0.46
+# inprdsc     7         0.36
+# fltsd       4         0.57
+# fltdpr      4         0.69
 
 #           n_answers  top_share
 # netustm       47       0.15
