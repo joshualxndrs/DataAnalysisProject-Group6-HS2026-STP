@@ -320,14 +320,10 @@ red <- "#b2182b"; grey <- "#a6a6a6"; dark <- "#5c5c5c"; text_grey <- "#666666"
 group_colours <- c(grey, red)     # in the order of the factor levels: 0 at or below, 1 above
 
 # font: the report's font, read from the repo's Report/fonts folder so the figures look the same
-# on every computer; if the file is not there, the system sans-serif is used instead
+# on every computer. if the file is not there, the system sans-serif is used instead.
 font_file <- "../../Report/fonts/ABCArealVariable.ttf"
-if (file.exists(font_file)) {
-  systemfonts::register_font("ABC Areal", plain = font_file)   # makes the file usable under this name
-  font <- "ABC Areal"
-} else {
-  font <- "sans"
-}
+if (file.exists(font_file)) systemfonts::register_font("ABC Areal", plain = font_file)
+font <- if (file.exists(font_file)) "ABC Areal" else "sans"
 
 # theme: no grid, no legend, no y-axis; the values are written on the data instead.
 # theme_void() is an empty look; theme() switches single elements back on or sets them
@@ -358,7 +354,6 @@ lonely_shares <- lonely_data %>%
 
 fig1 <- ggplot(lonely_data, aes(lonely)) +
   geom_histogram(binwidth = 1, fill = dark) +                                      # one bar per answer 1-4
-  geom_vline(xintercept = c(1.5, 2.5, 3.5), colour = "white", linewidth = 1.5) +   # white gaps between the bars
   geom_text(data = lonely_shares, aes(lonely, n, label = share), vjust = -0.7, family = font, size = text_size) +
   scale_x_continuous(breaks = 1:4, labels = c("None", "Some", "Most", "All")) +    # answer words under the bars
   scale_y_continuous(limits = c(0, 1300), expand = c(0, 0)) +                      # room above the tallest bar
@@ -388,11 +383,9 @@ group_counts <- group_counts %>%
 
 fig3 <- ggplot(group_counts, aes(n, net_group, fill = net_group)) +                # count on x, group on y
   geom_col(width = 0.7) +                                                          # one bar per group
-  geom_text(aes(label = label, colour = net_group), hjust = -0.1, family = font, size = text_size) +
+  geom_text(aes(label = label), hjust = -0.1, family = font, size = text_size) +   # the label after each bar
   scale_fill_manual(values = group_colours) +
-  scale_colour_manual(values = c(text_grey, red)) +                                # label colours
   scale_x_continuous(limits = c(0, 2200), expand = c(0, 0)) +                      # room for the labels
-  scale_y_discrete(expand = expansion(add = 0.7)) +                                # room above and below the bars
   theme_report + theme(axis.text.x = element_blank())                              # no numbers under the bars
 fig3
 save_fig(fig3, "fig3_groups.svg", figure_width, lines = 3)
@@ -475,8 +468,8 @@ fig5 <- ggplot(both_data, aes(net_min, lonely, colour = net_group)) +
   scale_colour_manual(values = group_colours) +
   scale_x_continuous(breaks = seq(120, 960, 120), labels = paste0(seq(2, 16, 2), "h"),   # every 2 hours
                      limits = c(0, 1080), expand = c(0, 0)) +
-  scale_y_continuous(breaks = 1:4, limits = c(0.6, 4.4), position = "right", expand = c(0, 0)) +   # scale 1-4 on the right
-  theme_report + theme(axis.text.y = element_text(colour = text_grey, size = 7, margin = margin(l = 4)))
+  scale_y_continuous(breaks = 1:4, limits = c(0.6, 4.4), expand = c(0, 0)) +        # the loneliness scale 1-4
+  theme_report + theme(axis.text.y = element_text(colour = text_grey, size = 7))   # show it on the left
 fig5
 save_fig(fig5, "fig5_scatter.svg", wide_width, lines = 4)
 # result: loneliness is spread the same way on both sides of the cut point. the split hides
