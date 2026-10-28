@@ -478,7 +478,7 @@ fig5 <- ggplot(both_data, aes(net_min, lonely, colour = net_group)) +
   scale_y_continuous(breaks = 1:4, limits = c(0.6, 4.4), position = "right", expand = c(0, 0)) +   # scale 1-4 on the right
   theme_report + theme(axis.text.y = element_text(colour = text_grey, size = 7, margin = margin(l = 4)))
 fig5
-save_fig(fig5, "fig5_scatter.svg", wide_width, lines = 5)
+save_fig(fig5, "fig5_scatter.svg", wide_width, lines = 4)
 # result: loneliness is spread the same way on both sides of the cut point. the split hides
 # how minutes vary inside each group, which Report 2 uses in full.
 

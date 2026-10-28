@@ -16,12 +16,12 @@
 #let u = 2.5 * X
 #let gut = 3 * X
 #let col = 16 * X
-#let margin = 9 * X
+#let margin = 12 * X
 #let span(k) = k * col + (k - 1) * gut
 #let col-a = 13 * X
 #let col-b = span(3) + 6 * X + 3 * X
 #let col-c = span(2)
-#let lines = 69
+#let lines = 66
 #let text-size = X / 0.519             // ABC Areal's x-height is 0.519 em
 #let small-size = 5 / 6 * text-size
 #let title-size = 1.5 * u / 0.716
@@ -33,10 +33,12 @@
 #let mono = ("ABC Areal Mono", "Courier New")
 
 #set page(paper: "a4",
-  margin: (left: margin, right: margin, top: margin, bottom: 841.89pt - margin - lines * u),
+  // the body is exactly `lines` lines tall; 297mm is A4, the 0.01pt keeps rounding from breaking the last row
+  margin: (left: margin, right: margin, top: margin, bottom: 297mm - margin - lines * u - 0.01pt),
   footer-descent: 0pt,
   footer: text(size: small-size, fill: grey, font: mono,
-    grid(columns: (col-a, col-b, col-c), column-gutter: gut,
+    grid(columns: (col-a, col-b, col-c), column-gutter: gut, row-gutter: 0pt,
+      grid.cell(colspan: 3, v(u)),                            // one empty line between the body and the credits
       [Authors], authors, [Data Analysis for Public Policy \ ETH Zürich, HS2026])))
 #set text(font: sans, size: text-size, fill: ink, top-edge: u - drop, bottom-edge: -drop, lang: "en")
 #set par(leading: 0pt, spacing: 0pt)
@@ -62,8 +64,6 @@
   tag[Report 1 \ Group 6],
   grid.cell(colspan: 2, text(size: title-size, top-edge: 2 * u - drop, bottom-edge: -drop, title)),
 
-  tag[Research \ question],
-  grid.cell(colspan: 2, rq),
 
   // findings
   tag[Findings],
@@ -110,7 +110,7 @@
 
   // figure 5 across the text and figure columns
   tag[Figure 5],
-  grid.cell(colspan: 2, fig([Every respondent, self-reported loneliness (1–4, jittered) by self-reported minutes online, #g1[red above the mean]], "fig5_scatter.svg", 5, width: col-b + gut + col-c)),
+  grid.cell(colspan: 2, fig([Every respondent, self-reported loneliness (1–4, jittered) by self-reported minutes online, #g1[red above the mean]], "fig5_scatter.svg", 4, width: col-b + gut + col-c)),
 
   // 5 interpretation
   small[5 Interpretation],

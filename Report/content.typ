@@ -15,8 +15,7 @@
 
 #import "numbers.typ": n, g1
 
-#let title = [Internet use and loneliness]
-#let rq = [Is people's internet use associated with their feeling of loneliness?]
+#let title = [Is people's internet use associated \ with their feeling of loneliness?]   // the research question is the title
 #let authors = [Gabriele Pizzi, Marlo (Clara) Roth, Ole Handschug, Joshua Silalahi]
 
 // FINDINGS, 3 lines. Two sentences: the result in plain language, then what it means and the
